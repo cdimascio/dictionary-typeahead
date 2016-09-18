@@ -1,0 +1,35 @@
+{
+  "name": "dictionary-typeahead",
+  "version": "0.9.0",
+  "description": "typeahead that utilizes a custom dictionary",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "rm -rf ./dist && ./node_modules/.bin/babel ./lib -d ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdimascio/dictionary-typeahead.git"
+  },
+  "keywords": [
+    "dictionary",
+    "typeahead",
+    "autocomplete",
+    "auto",
+    "complete",
+    "completion",
+    "autosuggest",
+    "suggest"
+  ],
+  "author": "Carmine DiMascio <cdimascio@gmail.com> (https://github.com/cdimascio)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cdimascio/dictionary-typeahead/issues"
+  },
+  "homepage": "https://github.com/cdimascio/dictionary-typeahead#readme",
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-0": "^6.5.0"
+  }
+}
