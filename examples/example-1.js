@@ -3,11 +3,15 @@ var TypeAhead = require('../dist').default;
 
 // Set up dictionary of keywords for type ahead
 var dictionary = [
-  "Super cool",
-  "Super",
-  "Typeahead",
-  "Type Ahead",
-  "Auto Complete is cool"
+  "Yellowstone",
+  "Yellowstone National Park",
+  "Grand Canyon",
+  "Arches",
+  "Arches National Park",
+  "Yosemite National Park",
+  "Yosemite",
+  "INYO National Park",
+  "INYO"
 ];
 
 // Configure on suggestion click handler

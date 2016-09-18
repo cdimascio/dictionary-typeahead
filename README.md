@@ -1,7 +1,8 @@
 #dictionary-typeahead
 
-
 Easily enable typeahead keyword(s) matching in your web app!
+
+![](https://raw.githubusercontent.com/cdimascio/dictionary-typeahead/master/examples/example-1.gif)
 
 ##Install
 
