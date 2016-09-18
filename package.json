@@ -1,10 +1,11 @@
 {
   "name": "dictionary-typeahead",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "typeahead that utilizes a custom dictionary",
   "main": "dist/index.js",
   "scripts": {
     "compile": "rm -rf ./dist && ./node_modules/.bin/babel ./lib -d ./dist",
+    "compile-examples": "./node_modules/.bin/browserify ./examples/example-1.js > ./examples/example-1-webready.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
