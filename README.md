@@ -3,11 +3,12 @@
 Easily enable typeahead keyword(s) matching in your web app!
 
 ![](https://raw.githubusercontent.com/cdimascio/dictionary-typeahead/master/examples/example-1.gif)
-
 ##Install
 
 `npm install dictionary-typeahead`
 
+##Prequisities
+Requires promises, thus depending on the browser, a promise polyfill may be required.
 
 ##Usage
 
@@ -26,7 +27,9 @@ const dictionary = [
 ];
 
 // Ask for suggestions
-const suggestions = TypeAhead.suggest(dictionary, input.value, caretPos);
+TypeAhead
+  .suggest(dictionary, input.value, caretPos)
+  .then(suggestions => console.log(suggestions);
 ```
 
 ###ES5
@@ -45,7 +48,9 @@ var dictionary = [
 ];
 
 // Ask for suggestions
-var suggestions = TypeAhead.suggest(dictionary, input.value, caretPos);
+TypeAhead
+  .suggest(dictionary, input.value, caretPos)
+  .then(suggestions => console.log(suggestions);
 ```
 
 ##API

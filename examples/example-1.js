@@ -25,10 +25,14 @@ window.suggestionClick = function(suggestion) {
 document.getElementById('textInput').addEventListener("keyup", function(e) {
   var input = document.getElementById("textInput");
   var caretPos = input.selectionStart;
-  var matches = TypeAhead.suggest(dictionary, input.value, caretPos);
-  var html = matches.map(function(m) {
-    return '<div onclick="suggestionClick(\'' + m + '\');">' + m + '</div>';
-  }).join('');
-  document.getElementById("results").innerHTML = html;
+  TypeAhead
+    .suggest(dictionary, input.value, caretPos)
+    .then(matches => {
+      var html = matches.map(function(m) {
+        return '<div onclick="suggestionClick(\'' + m + '\');">' + m + '</div>';
+      }).join('');
+      document.getElementById("results").innerHTML = html;
+    });
+
 });
 

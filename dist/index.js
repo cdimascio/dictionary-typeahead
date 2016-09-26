@@ -18,28 +18,30 @@ var DictionaryTypeAhead = function () {
     value: function suggest(dictionary, text, pos) {
       var _this = this;
 
-      if (!dictionary || !text || text[text.length - 1] === ' ') {
-        return [];
-      }
-      var tokens = this._tokenize(text.toLowerCase().substring(0, pos));
-      var ngrams = this._ngrams(tokens, 3).reduce(function (acc, tokens) {
-        var string = tokens.join(' ').trim();
-        if (string) {
-          acc.push(string);
+      return new Promise(function (resolve, reject) {
+        if (!dictionary || !text || text[text.length - 1] === ' ') {
+          return [];
         }
-        return acc;
-      }, []);
+        var tokens = _this._tokenize(text.toLowerCase().substring(0, pos));
+        var ngrams = _this._ngrams(tokens, 3).reduce(function (acc, tokens) {
+          var string = tokens.join(' ').trim();
+          if (string) {
+            acc.push(string);
+          }
+          return acc;
+        }, []);
 
-      var pattern = '(' + ngrams.map(function (n) {
-        return _this._escape(n);
-      }).join('|') + ')';
-      var matches = dictionary.filter(function (i) {
-        var re = new RegExp('\\b' + pattern + '.*');
-        var match = re.exec(i.toLowerCase());
-        return match !== null && match !== '';
+        var pattern = '(' + ngrams.map(function (n) {
+          return _this._escape(n);
+        }).join('|') + ')';
+        var matches = dictionary.filter(function (i) {
+          var re = new RegExp('\\b' + pattern + '.*');
+          var match = re.exec(i.toLowerCase());
+          return match !== null && match !== '';
+        });
+
+        return resolve(matches.sort(_this._sort(ngrams)));
       });
-
-      return matches.sort(this._sort(ngrams));
     }
   }, {
     key: 'complete',
