@@ -21,7 +21,7 @@ var DictionaryTypeAhead = function () {
 
       return new Promise(function (resolve, reject) {
         if (!dictionary || !text || text[text.length - 1] === ' ') {
-          return [];
+          resolve([]);
         }
         var tokens = _this._tokenize(text.toLowerCase().substring(0, pos));
         var ngrams = _this._ngrams(tokens, 3).reduce(function (acc, tokens) {
@@ -32,6 +32,9 @@ var DictionaryTypeAhead = function () {
           return acc;
         }, []);
 
+        if (ngrams.length === 0) {
+          resolve([]);
+        }
         var pattern = '(' + ngrams.map(function (n) {
           return _this._escape(n);
         }).join('|') + ')';
