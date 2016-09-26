@@ -16,6 +16,7 @@ Requires promises, thus depending on the browser, a promise polyfill may be requ
 
 ```
 import TypeAhead from ('dictionary-typeahead');
+const typeAhead = new TypeAhead();
 
 // Set up a dictionary of keywords
 const dictionary = [
@@ -27,7 +28,7 @@ const dictionary = [
 ];
 
 // Ask for suggestions
-TypeAhead
+typeAhead
   .suggest(dictionary, input.value, caretPos)
   .then(suggestions => console.log(suggestions);
 ```
@@ -37,6 +38,7 @@ TypeAhead
 ```
 // import the module
 var TypeAhead = require('dictionary-typeahead').default;
+var typeAhead = new TypeAhead();
 
 // Set up a dictionary of keywords
 var dictionary = [
@@ -48,17 +50,38 @@ var dictionary = [
 ];
 
 // Ask for suggestions
-TypeAhead
+typeAhead
   .suggest(dictionary, input.value, caretPos)
   .then(suggestions => console.log(suggestions);
+```
+
+##Options
+ 
+|Options|default|decription| 
+|---|---|---|---|---|
+|limit|-1|The number of suggestions to return or -1 to return all|
+|sorter|null|a sort function e.g. function(a,b) {return // -1, -, 1}|
+|prefixMatch|false|true to match only prefixes, false to return internal matches|
+```
+const typeAhead = new TypeAhead()
+```
+
+is equivalent to:
+
+```
+const typeAhead = new TypeAhead({
+  limit: -1, // 
+  sorter: null, // do not supply a customer sorter, use the default
+  prefixMatch: false // do not restrict suggestions to only prefix matches
+});
 ```
 
 ##API
 
 |API|description|result| 
 |---|---|---|---|---|
-|TypeAhead.suggest(dictionary, text, caretPosition)   | Given a dictionary of keywords, the user input text, and the user's caret position, find the set of matching suggestions |  returns an array of suggestions e.g. `["Super", "Super cool!"]` |
-|TypeAhead.complete(suggestion, text, caretPosition)  |  Given the the selected suggestion, the input text, and the user's caret position, complete the user's input with the selected suggestion | returns an object containing the text and the suggested 'replace until' position `{"text": "This is Super Cool", "pos": 18}` |
+|typeAhead.suggest(dictionary, text, caretPosition)   | Given a dictionary of keywords, the user input text, and the user's caret position, find the set of matching suggestions |  returns an array of suggestions e.g. `["Super", "Super cool!"]` |
+|typeAhead.complete(suggestion, text, caretPosition)  |  Given the the selected suggestion, the input text, and the user's caret position, complete the user's input with the selected suggestion | returns an object containing the text and the suggested 'replace until' position `{"text": "This is Super Cool", "pos": 18}` |
  
 ##Examples
 The example code can be found in the examples folder.
@@ -106,28 +129,33 @@ See the examples folder in this project
 ```
 // Setup TypeAhead
 var TypeAhead = require('../dist').default;
+var typeAhead = new TypeAhead();
 
 // Set up dictionary of keywords for type ahead
 var dictionary = [
-  "Super cool",
-  "Super",
-  "Typeahead",
-  "Type Ahead",
-  "Auto Complete is cool"
+  "Yellowstone",
+  "Yellowstone National Park",
+  "Grand Canyon",
+  "Arches",
+  "Arches National Park",
+  "Yosemite National Park",
+  "Yosemite",
+  "INYO National Park",
+  "INYO"
 ];
 
 // Configure on suggestion click handler
 window.suggestionClick = function(suggestion) {
   var input = document.getElementById('textInput');
   var caretPos = input.selectionStart;
-  input.value = TypeAhead.complete(suggestion, input.value, caretPos).text;
+  input.value = typeAhead.complete(suggestion, input.value, caretPos).text;
 }
 
 // Configure keyup listenener
 document.getElementById('textInput').addEventListener("keyup", function(e) {
   var input = document.getElementById("textInput");
   var caretPos = input.selectionStart;
-  TypeAhead
+  typeAhead
     .suggest(dictionary, input.value, caretPos)
     .then(matches => {
       var html = matches.map(function(m) {
@@ -136,8 +164,8 @@ document.getElementById('textInput').addEventListener("keyup", function(e) {
       document.getElementById("results").innerHTML = html;
     });
 });
-```
 
+```
 
 ##License
 [MIT](https://opensource.org/licenses/MIT)

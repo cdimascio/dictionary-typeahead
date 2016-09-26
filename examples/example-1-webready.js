@@ -11,10 +11,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var DictionaryTypeAhead = function () {
   function DictionaryTypeAhead() {
+    var options = arguments.length <= 0 || arguments[0] === undefined ? { limit: -1, sorter: null, prefixMatch: false } : arguments[0];
+
     _classCallCheck(this, DictionaryTypeAhead);
+
+    this._options = options;
   }
 
-  _createClass(DictionaryTypeAhead, null, [{
+  _createClass(DictionaryTypeAhead, [{
     key: 'suggest',
     value: function suggest(dictionary, text, pos) {
       var _this = this;
@@ -39,12 +43,18 @@ var DictionaryTypeAhead = function () {
           return _this._escape(n);
         }).join('|') + ')';
         var matches = dictionary.filter(function (i) {
-          var re = new RegExp('\\b' + pattern + '.*');
+          var p = _this._options.prefixMatch ? '^' : '\\b';
+          var re = new RegExp('' + p + pattern + '.*');
           var match = re.exec(i.toLowerCase());
           return match !== null && match !== '';
         });
 
-        return resolve(matches.sort(_this._sort(ngrams)));
+        var sorter = _this._options.sorter ? _this._options.sorter : _this._sort(ngrams);
+        if (_this._options.limit && _this._options.limit > -1) {
+          return resolve(matches.slice(0, _this._options.limit).sort(sorter));
+        } else {
+          return resolve(matches.sort(sorter));
+        }
       });
     }
   }, {
@@ -109,8 +119,12 @@ var DictionaryTypeAhead = function () {
             if (does(sTokens[0]).startWith(tokens[0])) {
               return prefixHelper(tokens.slice(1), sTokens.slice(1), res.concat(sTokens[0]));
             } else {
-              // No prefix matches found, return the entire suggestion
-              return noPrefixHelper(tokensToConsider, suggestionTokens);
+              if (this._options.prefixMatch) {
+                // No prefix matches found, return the entire suggestion
+              } else {
+                // search for non-prefix completions
+                return noPrefixHelper(tokensToConsider, suggestionTokens);
+              }
             }
           } else {
             return res.concat(sTokens);
@@ -194,20 +208,25 @@ var DictionaryTypeAhead = function () {
         }
       };
     }
+  }, {
+    key: '_escape',
+    value: function _escape(text) {
+      return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+    }
   }]);
 
   return DictionaryTypeAhead;
 }();
 
-DictionaryTypeAhead._escape = function (text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
-
 exports.default = DictionaryTypeAhead;
 },{}],2:[function(require,module,exports){
 // Setup TypeAhead
 var TypeAhead = require('../dist').default;
-
+var typeAhead = new TypeAhead({
+  limit: -1, // do not limit # of suggestions
+  sorter: null, // do not supply a customer sorter, use the default
+  prefixMatch: false // do not restrict suggestions to only prefix matches
+});
 // Set up dictionary of keywords for type ahead
 var dictionary = [
   "Yellowstone",
@@ -225,14 +244,14 @@ var dictionary = [
 window.suggestionClick = function(suggestion) {
   var input = document.getElementById('textInput');
   var caretPos = input.selectionStart;
-  input.value = TypeAhead.complete(suggestion, input.value, caretPos).text;
+  input.value = typeAhead.complete(suggestion, input.value, caretPos).text;
 }
 
 // Configure keyup listenener
 document.getElementById('textInput').addEventListener("keyup", function(e) {
   var input = document.getElementById("textInput");
   var caretPos = input.selectionStart;
-  TypeAhead
+  typeAhead
     .suggest(dictionary, input.value, caretPos)
     .then(matches => {
       var html = matches.map(function(m) {
