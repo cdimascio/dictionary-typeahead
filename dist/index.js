@@ -76,6 +76,7 @@ var DictionaryTypeAhead = function () {
       };
 
       function buildSuggestionTokens(tokensToConsider, suggestionTokens) {
+        var self = this;
         return prefixHelper(tokensToConsider, suggestionTokens);
 
         function is(a) {
@@ -118,7 +119,7 @@ var DictionaryTypeAhead = function () {
             if (does(sTokens[0]).startWith(tokens[0])) {
               return prefixHelper(tokens.slice(1), sTokens.slice(1), res.concat(sTokens[0]));
             } else {
-              if (this._options.prefixMatch) {
+              if (self._options.prefixMatch) {
                 // No prefix matches found, return the entire suggestion
               } else {
                 // search for non-prefix completions
