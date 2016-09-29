@@ -12,7 +12,7 @@ Requires promises, thus depending on the browser, a promise polyfill may be requ
 
 ##Usage
 
-####ES6
+####ES2016
 
 ```
 import TypeAhead from ('dictionary-typeahead');
@@ -20,11 +20,15 @@ const typeAhead = new TypeAhead();
 
 // Set up a dictionary of keywords
 const dictionary = [
-  "Super cool",
-  "Super",
-  "Typeahead",
-  "Type Ahead",
-  "Auto Complete is cool"
+  "Yellowstone",
+  "Yellowstone National Park",
+  "Grand Canyon",
+  "Arches",
+  "Arches National Park",
+  "Yosemite National Park",
+  "Yosemite",
+  "INYO National Park",
+  "INYO"
 ];
 
 // Ask for suggestions
@@ -42,11 +46,15 @@ var typeAhead = new TypeAhead();
 
 // Set up a dictionary of keywords
 var dictionary = [
-  "Super cool",
-  "Super",
-  "Typeahead",
-  "Type Ahead",
-  "Auto Complete is cool"
+  "Yellowstone",
+  "Yellowstone National Park",
+  "Grand Canyon",
+  "Arches",
+  "Arches National Park",
+  "Yosemite National Park",
+  "Yosemite",
+  "INYO National Park",
+  "INYO"
 ];
 
 // Ask for suggestions
@@ -80,10 +88,10 @@ const typeAhead = new TypeAhead({
 
 |API|description|result| 
 |---|---|---|---|---|
-|typeAhead.suggest(dictionary, text, caretPosition)   | Given a dictionary of keywords, the user input text, and the user's caret position, find the set of matching suggestions |  returns an array of suggestions e.g. `["Super", "Super cool!"]` |
+|typeAhead.suggest(dictionary, text, caretPosition)   | Given a dictionary of keywords, the user input text, and the user's caret position, find the set of matching suggestions |  returns a `Promise` that resolves with an array of suggestions e.g. `["Super", "Super cool!"]` |
 |typeAhead.complete(suggestion, text, caretPosition)  |  Given the the selected suggestion, the input text, and the user's caret position, complete the user's input with the selected suggestion | returns an object containing the text and the suggested 'replace until' position `{"text": "This is Super Cool", "pos": 18}` |
  
-##Examples
+##Example
 The example code can be found in the examples folder.
 
 ###Run It!

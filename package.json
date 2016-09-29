@@ -1,6 +1,6 @@
 {
   "name": "dictionary-typeahead",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "typeahead that utilizes a custom dictionary",
   "main": "dist/index.js",
   "scripts": {
