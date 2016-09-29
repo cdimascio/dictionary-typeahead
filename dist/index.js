@@ -59,6 +59,7 @@ var DictionaryTypeAhead = function () {
   }, {
     key: 'complete',
     value: function complete(suggestion, text, pos) {
+      var self = this;
       var tokenBeforeCursor = this._tokenize(text.substring(0, pos), false);
       var tokensAfterCursor = this._tokenize(text.substring(pos, text.length), false);
       var suggestionTokens = this._tokenize(suggestion);
@@ -76,7 +77,6 @@ var DictionaryTypeAhead = function () {
       };
 
       function buildSuggestionTokens(tokensToConsider, suggestionTokens) {
-        var self = this;
         return prefixHelper(tokensToConsider, suggestionTokens);
 
         function is(a) {
