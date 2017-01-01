@@ -14,7 +14,7 @@ Requires promises, thus depending on the browser, a promise polyfill may be requ
 
 ####ES2016
 
-```
+```javascript
 import TypeAhead from ('dictionary-typeahead');
 const typeAhead = new TypeAhead();
 
@@ -39,7 +39,7 @@ typeAhead
 
 ###ES5
 
-```
+```javascript
 // import the module
 var TypeAhead = require('dictionary-typeahead').default;
 var typeAhead = new TypeAhead();
@@ -70,13 +70,13 @@ typeAhead
 |limit|-1|The number of suggestions to return or -1 to return all|
 |sorter|null|a sort function e.g. function(a,b) {return // -1, -, 1}|
 |prefixMatch|false|true to match only prefixes, false to return internal matches|
-```
+```javascript
 const typeAhead = new TypeAhead()
 ```
 
 is equivalent to:
 
-```
+```javascript
 const typeAhead = new TypeAhead({
   limit: -1, // 
   sorter: null, // do not supply a customer sorter, use the default
@@ -116,7 +116,7 @@ From the project root
 It's super easy to use
 
 ###index.html
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,7 +134,7 @@ It's super easy to use
 ###example-1-webready.js
 See the examples folder in this project
 
-```
+```javascript
 // Setup TypeAhead
 var TypeAhead = require('../dist').default;
 var typeAhead = new TypeAhead();
